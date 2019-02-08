@@ -823,7 +823,7 @@ int dtls_listen(struct dtls_sock **sockp, const struct sa *laddr,
 	if (err)
 		goto out;
 
-	err = hash_alloc(&sock->ht, hash_valid_size(htsize));
+	err = hash_alloc(&sock->ht, HASH_SIZE_DEFAULT);
 	if (err)
 		goto out;
 

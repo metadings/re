@@ -21,19 +21,19 @@ static void destructor(void *arg)
 }
 
 
-int odict_alloc(struct odict **op, uint32_t hash_size)
+int odict_alloc(struct odict **op, uint32_t size)
 {
 	struct odict *o;
 	int err;
 
-	if (!op || !hash_size)
+	if (!op || !size)
 		return EINVAL;
 
 	o = mem_zalloc(sizeof(*o), destructor);
 	if (!o)
 		return ENOMEM;
 
-	err = hash_alloc(&o->ht, hash_valid_size(hash_size));
+	err = hash_alloc(&o->ht, size);
 	if (err)
 		goto out;
 
@@ -44,6 +44,18 @@ int odict_alloc(struct odict **op, uint32_t hash_size)
 		*op = o;
 
 	return err;
+}
+
+
+struct odict *odict_new_size(uint32_t size) {
+	struct odict *that;
+	odict_alloc(&that, size);
+	return that;
+}
+
+struct odict *odict_new() 
+{
+	return odict_new_size(HASH_SIZE_DEFAULT);
 }
 
 

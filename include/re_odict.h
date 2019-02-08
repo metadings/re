@@ -32,7 +32,9 @@ struct odict_entry {
 	enum odict_type type;
 };
 
-int odict_alloc(struct odict **op, uint32_t hash_size);
+int odict_alloc(struct odict **op, uint32_t size);
+struct odict *odict_new_size(uint32_t size);
+struct odict *odict_new(void);
 const struct odict_entry *odict_lookup(const struct odict *o, const char *key);
 size_t odict_count(const struct odict *o, bool nested);
 int odict_debug(struct re_printf *pf, const struct odict *o);
